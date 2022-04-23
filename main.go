@@ -20,7 +20,7 @@ func main() {
 	router.Post("/gcs/", FileUploadToGCS)
 
 	// Upload File from GCS to BQ
-	router.Post("/gcstobq/", FileUploadToGCSToBQ)
+	router.Post("/gcstobq/", FileUploadFromGCSToBQ)
 
 	// Upload File to BQ
 	router.Post("/bq/", FileUploadToBQ)

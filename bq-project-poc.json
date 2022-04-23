@@ -1,0 +1,6 @@
+{
+    "type": "service_account",
+    "project_id":"bq-project-poc",
+    "private_key":"provide all required service account details",
+    "client_email":""
+}
