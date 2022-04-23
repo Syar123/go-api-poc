@@ -5,7 +5,9 @@ Building an api to be able to connect to google cloud from your local system usi
 ## To install gorilla/mux router
 
 go mod init example.com/m
+
 go get github.com/gorilla/mux
+
 go get github.com/lib/pq
 
 ## To install go-chi router
