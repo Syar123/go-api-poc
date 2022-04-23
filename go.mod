@@ -7,6 +7,13 @@ require (
 	cloud.google.com/go/bigquery v1.31.0 // indirect
 	cloud.google.com/go/compute v1.6.0 // indirect
 	cloud.google.com/go/iam v0.3.0 // indirect
+	cloud.google.com/go/spanner v1.31.0 // indirect
+	github.com/census-instrumentation/opencensus-proto v0.3.0 // indirect
+	github.com/cespare/xxhash/v2 v2.1.1 // indirect
+	github.com/cncf/udpa/go v0.0.0-20210930031921-04548b0d99d4 // indirect
+	github.com/cncf/xds/go v0.0.0-20211011173535-cb28da3451f1 // indirect
+	github.com/envoyproxy/go-control-plane v0.9.10-0.20210907150352-cf90f659a021 // indirect
+	github.com/envoyproxy/protoc-gen-validate v0.1.0 // indirect
 	github.com/go-chi/chi/v5 v5.0.7 // indirect
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
 	github.com/golang/protobuf v1.5.2 // indirect

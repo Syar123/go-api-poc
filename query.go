@@ -20,9 +20,9 @@ type JsonResponse struct {
 
 func Query(w http.ResponseWriter, r *http.Request) {
 	ctx := context.Background()
-	bqProject := "bq-project-poc"
+	projectID := "bq-project-poc"
 	serviceAccount := "bq-project-poc.json"
-	client, err := bigquery.NewClient(ctx, bqProject, option.WithCredentialsFile(serviceAccount))
+	client, err := bigquery.NewClient(ctx, projectID, option.WithCredentialsFile(serviceAccount))
 	if err != nil {
 		panic(err)
 	}
