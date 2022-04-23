@@ -14,8 +14,8 @@ import (
 
 type JsonResponse struct {
 	Type    string           `json:"type"`
-	Data    []bigquery.Value `"json:"data"`
-	Message string           `"json: "message"`
+	Data    []bigquery.Value `json:"data"`
+	Message string           `json:"message"`
 }
 
 func Query(w http.ResponseWriter, r *http.Request) {

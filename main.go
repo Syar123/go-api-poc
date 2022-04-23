@@ -23,13 +23,7 @@ func main() {
 	router.Post("/bq/", FileUploadToBQ)
 
 	// Upload Local CSV File to BQ and update table_details table in spanner DB
-	router.Post("/bq/", FileUploadToBQSpanner)
-
-	// Upload File from GCS to BQ
-	router.Post("/gcstobq/", FileUploadFromGCSToBQ)
-
-	// Upload File to BQ and GCS Asynchronously
-	router.Post("/gcsandbq/", FileUploadToGCSBQ)
+	router.Post("/bqspanner/", FileUploadToBQSpanner)
 
 	// serve the app
 	fmt.Println("Server at 8080")

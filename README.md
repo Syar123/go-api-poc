@@ -23,6 +23,8 @@ go get
 
 "cloud.google.com/go/bigquery"
 
+"cloud.google.com/go/spanner"
+
 "golang.org/x/net/context"
 
 "google.golang.org/api/iterator"
@@ -35,7 +37,7 @@ go get
 
 cd into your project location and run below command
 
-go run main.go query.go fileuploadtogcs.go
+go run main.go query.go fileuploadtogcs.go fileuploadtobq.go fileuploadtobqwithspanner.go
 
 #### Query API 
 
@@ -54,4 +56,35 @@ filepath : "your local file path (eg: /users/syar/documents/localtest.json)"
 filename : "your desired GCS file name (eg: poc-test)"
 
 your gcs file path gs://gcs-bucket-poc/raw/poc-test 
+
+#### File Upload TO BQ API
+
+using POST method URL ("http://localhost:8080/bq/")
+
+projectID : "bq-project-poc"
+
+recordtype : CSV
+
+provide below parameters (key: value) 
+
+dataset_name : "poc_dataset"
+
+table_name : "poc_table"
+
+filepath : "your local file path (eg: /users/syar/documents/localtest.json)"
+
+loadtype : "replace" or "append"
+
+delimiter : eg : "~"
+
+#### File Upload TO BQ and Update Spanner DB API
+
+using POST method URL ("http://localhost:8080/bqspanner/")
+
+Spanner DB Instance : "spanner-test-db"
+	
+Spanner Database MYSQL : "spanner-test-mysql"
+
+provide parameters as above (key: value) 
+
 
