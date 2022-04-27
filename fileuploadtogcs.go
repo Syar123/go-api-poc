@@ -2,6 +2,8 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
+	"log"
 	"net/http"
 	"os"
 
@@ -16,7 +18,7 @@ func FileUploadToGCS(w http.ResponseWriter, r *http.Request) {
 	ctx := context.Background()
 	client, err := storage.NewService(ctx, option.WithCredentialsFile(serviceAccount))
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 	filePath := r.FormValue("filepath")
 	fileName := r.FormValue("filename")
@@ -28,8 +30,7 @@ func FileUploadToGCS(w http.ResponseWriter, r *http.Request) {
 	} else {
 		file, err := os.Open(filePath)
 		if err != nil {
-			println("error opening file")
-			panic(err)
+			fmt.Fprintf(os.Stderr, "error opening file: %v\n", err)
 		}
 		defer file.Close()
 		object := &storage.Object{
@@ -38,7 +39,7 @@ func FileUploadToGCS(w http.ResponseWriter, r *http.Request) {
 		}
 		_, err = client.Objects.Insert(gcsBucket, object).Media(file).Do()
 		if err != nil {
-			panic(err)
+			fmt.Fprintf(os.Stderr, "gcs file insert error: %v\n", err)
 		}
 		response = JsonResponse{Type: "success", Message: "The file has been uploaded to GCS successfully!"}
 	}

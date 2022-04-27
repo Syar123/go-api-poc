@@ -34,12 +34,12 @@ func FileUploadToBQSpanner(w http.ResponseWriter, r *http.Request) {
 	ctx := context.Background()
 	client, err := bigquery.NewClient(ctx, projectID, option.WithCredentialsFile(serviceAccount))
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 	defer client.Close()
 	dbclient, err := spanner.NewClient(ctx, db, option.WithCredentialsFile(serviceAccount))
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 	defer dbclient.Close()
 
@@ -48,7 +48,7 @@ func FileUploadToBQSpanner(w http.ResponseWriter, r *http.Request) {
 	} else {
 		f, err := os.Open(filePath)
 		if err != nil {
-			panic(err)
+			fmt.Fprintf(os.Stderr, "error opening file: %v\n", err)
 		}
 		source := bigquery.NewReaderSource(f)
 		source.AutoDetect = true   // Allow BigQuery to determine schema.
@@ -73,17 +73,14 @@ func FileUploadToBQSpanner(w http.ResponseWriter, r *http.Request) {
 
 		job, err := loader.Run(ctx)
 		if err != nil {
-			println("error in job loading")
-			panic(err)
+			fmt.Fprintf(os.Stderr, "error in job loading: %v\n", err)
 		}
 		status, err := job.Wait(ctx)
 		if err != nil {
-			println("error during job wait")
-			panic(err)
+			fmt.Fprintf(os.Stderr, "error during job wait: %v\n", err)
 		}
 		if status.Err() != nil {
-			println("error in job status")
-			panic(err)
+			fmt.Fprintf(os.Stderr, "error in job status: %v\n", err)
 		}
 
 		response = JsonResponse{Type: "success", Message: "The file has been uploaded to Big Query successfully!"}
@@ -96,7 +93,7 @@ func FileUploadToBQSpanner(w http.ResponseWriter, r *http.Request) {
 			[]interface{}{tableID, datasetID, "CSV", loadType, "test dataset", spanner.CommitTimestamp, spanner.CommitTimestamp}),
 	})
 	if err != nil {
-		log.Panicln(err)
+		log.Fatal(err)
 	}
 
 	// inserting/updating table_details table in spanner db using dml

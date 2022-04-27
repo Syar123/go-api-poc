@@ -3,7 +3,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
+	"os"
 
 	"cloud.google.com/go/bigquery"
 
@@ -24,7 +26,7 @@ func Query(w http.ResponseWriter, r *http.Request) {
 	serviceAccount := "bq-project-poc.json"
 	client, err := bigquery.NewClient(ctx, projectID, option.WithCredentialsFile(serviceAccount))
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 	query := r.FormValue("query")
 	var response = JsonResponse{}
@@ -35,7 +37,7 @@ func Query(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Executing query: ", query)
 		it, err := q.Read(ctx)
 		if err != nil {
-			panic(err)
+			fmt.Fprintf(os.Stderr, "query read: %v\n", err)
 		}
 		type r []bigquery.Value
 		result := r{}
@@ -46,7 +48,7 @@ func Query(w http.ResponseWriter, r *http.Request) {
 				break
 			}
 			if err != nil {
-				panic(err)
+				fmt.Fprintf(os.Stderr, "iterator error: %v\n", err)
 			}
 
 			result = append(result, row)
